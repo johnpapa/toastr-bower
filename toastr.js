@@ -1,6 +1,6 @@
 ﻿/*
  * Toastr
- * Version 2.0.0
+ * Version 2.0.1
  * Copyright 2012 John Papa and Hans Fjällemark.  
  * All Rights Reserved.  
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
@@ -12,7 +12,7 @@
 ; (function (define) {
 	define(['jquery'], function ($) {
 		return (function () {
-			var version = '2.0.0';
+			var version = '2.0.1';
 			var $container;
 			var listener;
 			var toastId = 0;
