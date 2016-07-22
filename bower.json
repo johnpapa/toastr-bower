@@ -1,6 +1,6 @@
 {
   "name": "toastr",
-  "version": "2.1.2",
+  "version": "2.1.333",
   "main": ["toastr.js", "toastr.css"],
   "dependencies": {
 		"jquery": ">=1.6.3 <3"
