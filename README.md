@@ -129,6 +129,13 @@ toastr.options.onclick = function() { console.log('clicked'); }
 toastr.options.onCloseClick = function() { console.log('close button clicked'); }
 ```
 
+#### Prevent onHidden from onCloseClick
+```
+toastr.options.onCloseClickNoOnHidden = true;
+```
+
+When true, prevents the execution of `onHidden`. This is useful when you have a different flow when user manually clicks on the close button and when the toastr fades away automatically.
+
 ### Animation Options
 Toastr will supply default animations, so you do not have to provide any of these settings. However you have the option to override the animations if you like.
 

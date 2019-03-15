@@ -18,6 +18,7 @@
             var listener;
             var toastId = 0;
             var closeClass = 'toast-close-button';
+            var userClickedCloseBtn = false;
             var toastType = {
                 error: 'error',
                 info: 'info',
@@ -304,6 +305,7 @@
 
                             if (options.onCloseClick) {
                                 options.onCloseClick(event);
+                                userClickedCloseBtn = true;
                             }
 
                             hideToast(true);
@@ -417,7 +419,7 @@
                         complete: function () {
                             removeToast($toastElement);
                             clearTimeout(intervalId);
-                            if (options.onHidden && response.state !== 'hidden') {
+                            if (options.onHidden && response.state !== 'hidden' && !(options.onCloseClickNoOnHidden && userClickedCloseBtn)) {
                                 options.onHidden();
                             }
                             response.state = 'hidden';
