@@ -17,6 +17,7 @@
             var $container;
             var listener;
             var toastId = 0;
+            var closeClass = 'toast-close-button';
             var toastType = {
                 error: 'error',
                 info: 'info',
@@ -185,7 +186,7 @@
                     escapeHtml: false,
                     target: 'body',
                     closeHtml: '<button type="button">&times;</button>',
-                    closeClass: 'toast-close-button',
+                    closeClass: closeClass,
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false,
@@ -372,7 +373,7 @@
 
                 function setCloseButton() {
                     if (options.closeButton) {
-                        $closeElement.addClass(options.closeClass).attr('role', 'button');
+                        $closeElement.addClass(closeClass).attr('role', 'button');
                         $toastElement.prepend($closeElement);
                     }
                 }
