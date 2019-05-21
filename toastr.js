@@ -235,6 +235,8 @@
                     map: map
                 };
 
+                resetDefaults();
+
                 personalizeToast();
 
                 displayToast();
@@ -260,6 +262,10 @@
                         .replace(/'/g, '&#39;')
                         .replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;');
+                }
+
+                function resetDefaults() {
+                    userClickedCloseBtn = false;
                 }
 
                 function personalizeToast() {
