@@ -17,6 +17,8 @@
             var $container;
             var listener;
             var toastId = 0;
+            var closeClass = 'toast-close-button';
+            var userClickedCloseBtn = false;
             var toastType = {
                 error: 'error',
                 info: 'info',
@@ -121,14 +123,14 @@
 
             // internal functions
 
-            function clearContainer (options) {
+            function clearContainer(options) {
                 var toastsToClear = $container.children();
                 for (var i = toastsToClear.length - 1; i >= 0; i--) {
                     clearToast($(toastsToClear[i]), options);
                 }
             }
 
-            function clearToast ($toastElement, options, clearOptions) {
+            function clearToast($toastElement, options, clearOptions) {
                 var force = clearOptions && clearOptions.force ? clearOptions.force : false;
                 if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
                     $toastElement[options.hideMethod]({
@@ -185,7 +187,7 @@
                     escapeHtml: false,
                     target: 'body',
                     closeHtml: '<button type="button">&times;</button>',
-                    closeClass: 'toast-close-button',
+                    closeClass: closeClass,
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false,
@@ -233,6 +235,8 @@
                     map: map
                 };
 
+                resetDefaults();
+
                 personalizeToast();
 
                 displayToast();
@@ -260,6 +264,10 @@
                         .replace(/>/g, '&gt;');
                 }
 
+                function resetDefaults() {
+                    userClickedCloseBtn = false;
+                }
+
                 function personalizeToast() {
                     setIcon();
                     setTitle();
@@ -276,7 +284,7 @@
                     switch (map.iconClass) {
                         case 'toast-success':
                         case 'toast-info':
-                            ariaValue =  'polite';
+                            ariaValue = 'polite';
                             break;
                         default:
                             ariaValue = 'assertive';
@@ -303,6 +311,7 @@
 
                             if (options.onCloseClick) {
                                 options.onCloseClick(event);
+                                userClickedCloseBtn = true;
                             }
 
                             hideToast(true);
@@ -321,7 +330,7 @@
                     $toastElement.hide();
 
                     $toastElement[options.showMethod](
-                        {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
+                        { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
                     );
 
                     if (options.timeOut > 0) {
@@ -372,7 +381,7 @@
 
                 function setCloseButton() {
                     if (options.closeButton) {
-                        $closeElement.addClass(options.closeClass).attr('role', 'button');
+                        $closeElement.addClass(closeClass).attr('role', 'button');
                         $toastElement.prepend($closeElement);
                     }
                 }
@@ -416,7 +425,7 @@
                         complete: function () {
                             removeToast($toastElement);
                             clearTimeout(intervalId);
-                            if (options.onHidden && response.state !== 'hidden') {
+                            if (options.onHidden && response.state !== 'hidden' && !(options.onCloseClickNoOnHidden && userClickedCloseBtn)) {
                                 options.onHidden();
                             }
                             response.state = 'hidden';
@@ -438,7 +447,7 @@
                     clearTimeout(intervalId);
                     progressBar.hideEta = 0;
                     $toastElement.stop(true, true)[options.showMethod](
-                        {duration: options.showDuration, easing: options.showEasing}
+                        { duration: options.showDuration, easing: options.showEasing }
                     );
                 }
 
